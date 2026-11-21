@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for carl ♡</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: monospace;
+  background: #140d22;
+  color: #f8eaff;
+  text-align: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+main {
+  padding: 30px 18px;
+}
+
+.panel {
+  max-width: 700px;
+  margin: 35px auto;
+  padding: 30px 22px;
+  border: 2px solid #bc8bff;
+  border-radius: 20px;
+  background: #241735;
+  box-shadow: 0 0 25px #a45bff33;
+}
+
+h1, h2 {
+  color: #e5baff;
+}
+
+p {
+  line-height: 1.8;
+}
+
+button {
+  padding: 12px 18px;
+  margin: 10px;
+  background: #d7a6ff;
+  color: #241735;
+  border: none;
+  border-radius: 12px;
+  font-family: monospace;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #f1d4ff;
+  transform: scale(1.04);
+}
+
+input {
+  padding: 12px;
+  width: 80%;
+  max-width: 350px;
+  border-radius: 10px;
+  border: 2px solid #c69aff;
+  background: #120b1c;
+  color: white;
+  font-family: monospace;
+}
+
+.hidden {
+  display: none;
+}
+
+.secret {
+  cursor: pointer;
+  font-size: 30px;
+  margin: 15px;
+  display: inline-block;
+}
+
+#pop {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #e4baff;
+  color: #241735;
+  padding: 15px;
+  border-radius: 15px;
+  z-index: 100;
+  width: 85%;
+  max-width: 450px;
+  display: none;
+}
+
+.letter {
+  text-align: left;
+  white-space: pre-wrap;
+  line-height: 1.9;
+}
+
+.heart {
+  position: fixed;
+  pointer-events: none;
+  animation: float 5s linear forwards;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(100vh);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+<main>
+
+<section id="intro" class="panel">
+<h1>haiii my dearest husband carl mweheheheheh</h1>
+<p>are you readyyyyyyyy?</p>
+<button onclick="go('password')">LET'S GOOOOOO</button>
+</section>
+
+<section id="password" class="panel hidden">
+<h2>birthday security system</h2>
+<p>enter the birthday code, husband.</p>
+<input id="pass" placeholder="enter code">
+<br>
+<button onclick="checkPass()">unlock</button>
+<p id="passmsg"></p>
+</section>
+
+<section id="fruit" class="panel hidden">
+<h2>puzzle no. 1 🍈</h2>
+<p>what is your wife's favorite fruit?</p>
+<p><i>clue: meloooooon</i></p>
+<input id="fruitanswer" placeholder="your answer">
+<br>
+<button onclick="checkFruit()">submit answer</button>
+<p id="fruitmsg"></p>
+</section>
+
+<section id="name" class="panel hidden">
+<h2>puzzle no. 2</h2>
+<p>what's your wife's name?</p>
+<input id="nameanswer" placeholder="answer here">
+<br>
+<button onclick="checkName()">submit answer</button>
+<p id="namemsg"></p>
+</section>
+
+<section id="food" class="panel hidden">
+<h2>VERY IMPORTANT QUESTION</h2>
+<p>what do you want to eat, husband?</p>
+<input id="foodanswer" placeholder="tell me what you want">
+<br>
+<button onclick="foodTrap()">answer</button>
+<p id="foodmsg"></p>
+</section>
+
+<section id="secrets" class="panel hidden">
+<h2>you made it, husband!</h2>
+<p>but wait... try clicking EVERYTHING.</p>
+
+<div class="secret" onclick="randomMessage()">🌙</div>
+<div class="secret" onclick="randomMessage()">💌</div>
+<div class="secret" onclick="randomMessage()">🦇</div>
+<div class="secret" onclick="randomMessage()">⭐</div>
+<div class="secret" onclick="randomMessage()">🖤</div>
+<div class="secret" onclick="randomMessage()">🌷</div>
+
+<br>
+<button onclick="go('final')">i think i'm done...</button>
+</section>
+
+<section id="final" class="panel hidden">
+<h2>for my dearest husband ♡</h2>
+<p>you found your final reward.</p>
+<button onclick="openLetter()">OPEN YOUR LETTER 💌</button>
+<div id="letter" class="letter hidden"></div>
+</section>
+
+</main>
+
+<div id="pop"></div>
+
+<script>
+function go(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+const wrongMessages = [
+"excuse me???? wrong answer, husband.",
+"booooo. try again my babyyyy hahaha.",
+"not even close, mr. sand eater.",
+"do you need your wife's help???",
+"hahahahahah wronggggg. that's not your birthday, silly.",
+"access denied. kiss your wife and try again.",
+"naurrrrr, my husband is struggling.",
+"wrong code. but you're still my favorite idiot.",
+"the security system is laughing at you rn.",
+"i know you can do it, crybaby hubby.",
+"hmmmmmmmm. are you sure you're my husband?",
+"one more try, baby. i'm rooting for you!"
+];
+
+function checkPass() {
+  let val = document.getElementById('pass').value.trim();
+  if(val === "1122") {
+    showPop("congratulations mr. sand eater, you survived my security system. hahahhahha iloveyousomuchhhhh husbanddddd");
+    go('fruit');
+  } else {
+    document.getElementById('passmsg').innerText =
+    wrongMessages[Math.floor(Math.random()*wrongMessages.length)];
+  }
+}
+
+function checkFruit() {
+  let val = document.getElementById('fruitanswer').value.trim().toLowerCase();
+  if(val === "melon") {
+    document.getElementById('fruitmsg').innerText = "go my baby! goood job husband!";
+    setTimeout(() => go('name'), 1200);
+  } else {
+    document.getElementById('fruitmsg').innerText = "try again husband 🐉";
+  }
+}
+
+function checkName() {
+  let val = document.getElementById('nameanswer').value.trim().toLowerCase();
+  if(val === "kath chua") {
+    showPop("go my baby! goood job husband!");
+    setTimeout(() => go('food'), 1200);
+  } else {
+    document.getElementById('namemsg').innerText =
+    wrongMessages[Math.floor(Math.random()*wrongMessages.length)];
+  }
+}
+
+function foodTrap() {
+  document.getElementById('foodmsg').innerText =
+  "u dont want to eat ur wife? tsssk";
+  setTimeout(() => go('secrets'), 2200);
+}
+
+const secrets = [
+"you found me, sneaky little husband.",
+"psst... your wife loves you. don't tell anyone.",
+"why are you clicking everything babyyyyyyyyyyy",
+"one kiss from me and a good head, one reward from universe.",
+"you have been caught lacking. go hug me mr. sheikh.",
+"this secret is sponsored by your bat eater wife",
+"ahhah gotcha husband",
+"crybaby hubby",
+"go sheikh goooo",
+"mr. sand eater",
+"gggggggggggoooooooooooo baeeeeeeeeeeee"
+];
+
+function randomMessage() {
+  showPop(secrets[Math.floor(Math.random()*secrets.length)]);
+}
+
+function showPop(msg) {
+  let p = document.getElementById('pop');
+  p.innerText = msg;
+  p.style.display = 'block';
+  setTimeout(() => p.style.display = 'none', 3000);
+}
+
+function openLetter() {
+  let letter = document.getElementById('letter');
+  letter.classList.remove('hidden');
+
+  letter.innerText = `to my dearest husband,
+
+happpy happpy birthdaaaaaay babyyy kooooooooooo! niyayayayayayayhahaahahaha mas excited pa ako sa birthday mooooo eeeeeeeee kapag nababasa mo na itoong messages koooooooooo, sigurado umiiyak ako nitooooo niyahahahahahhahaha thankyouuuu for exisitingg mahaaaaaal mwheheheheehhehehehehe
+
+sooooooooooooooooooooo babyyyy, i js want to say na iloveytiousososomuchhhhh aaaaaaaah ion even know where to start kasi ang dami kong gustong sabihin sayoooo. but first, i hope you know how much you mean to me husbanddddddd. i hope you never doubt how loved, appreciated, and cherished you are, not just today but every single day
+
+i want you to know that i'm always here, baby. thru your good days, your bad days, your tired days, your silent days, and even the days when everything feels so heavy i'll always be rooting for you. i believe in you so much mahal and i hope you never feel like you have to face everything alone. hindi man akooo yung perfect girlfriend/wife, pero i promise to listen to ur nonstop yap, understand u more, comfort you, support and remind you that you are not alone. youeee not alone na husbandddd, andito lang ako, andito lang si kath.
+
+i'm so, so, so lucky, blessed, and grateful to have you in my life babygyyy. sometimes i just think about you and go aaaaaaaaaaaaaaahhhhb how did i get so lucky to have this man? my husband? my baby? my "habibi" hahahaahahahaha peroooo seryosoooooo i am so grateful for you mahal, for your existence, for the little things you do, for us and for the person you are mahal kooooo
+
+on your birthday, i wish you so many beautiful things. i wish you happiness, peace, good health, success, and all the things your heart has been quietly hoping for. i hope life becomes gentler to you, and i hope you get to experience so many more reasons to smile. you deserve allllll theeeeeeeeeee good things, baby
+
+and hehehehe, i hope magkakasama na us sa susunod na birthday mooooooooooo. i want more memories, more laughter, more stupid joke more kulitan, more love, and more more nore moreeeeeeeeeeee days where i get to call yoooooou my husband.
+
+iloveyousoooooooooomuch, my dearest carl. happy birthday againnnnnnnnn! mahal na mahal kitaaaaaaaaaaaaaaaa`;
+
+  createHearts();
+}
+
+function createHearts() {
+  for(let i=0; i<25; i++) {
+    let h = document.createElement('div');
+    h.className = 'heart';
+    h.innerText = ['♡','♥','✦','✨'][Math.floor(Math.random()*4)];
+    h.style.left = Math.random()*100 + 'vw';
+    h.style.fontSize = (15+Math.random()*25)+'px';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 5000);
+  }
+}
+</script>
+</body>
+</html>
